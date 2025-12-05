@@ -7,7 +7,7 @@ interface PageHeaderProp{
 
 const PageHeader:React.FC<PageHeaderProp>=({heading='',subHeading=''})=>{
     return (
-        <div className="p-2 text-center py-4">
+        <div className="p-2 text-center">
             <h1 className="text-2xl">{heading}</h1>
             <h1 className="text-secondary" >{subHeading}</h1>
         </div>
