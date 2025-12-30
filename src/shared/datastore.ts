@@ -1,20 +1,46 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 interface DataStoreItemType<T> {
   records: T;
-  page: number;
+  currentPage: number;
+  pageSize: number;
+  total: number;
 }
-export const createDataStore = <T extends DataStoreItemType>() => {
-  const [store, setStoreState] = useState<DataStoreItemType>({
+export const createDataStore = <T extends DataStoreItemType<T>>() => {
+  //Store variable
+  const [store, setStoreState] = useState<T>({
     records: [],
-    page: 1,
+    pageSize: 1,
+    total: 0,
+    currentPage: 1,
   });
 
-  const setStore = useCallback((items: T[], page: number) => {
-  });
-  const eliminateDuplicateRecords=(records:DataStoreItemType,data:T[]): T[]=>{
-		const duplicateArray: T[] = [];
-		const eliminatedArray: Array<T> = [];
-    
-  }
+  // Assign the value in store from API response
+  const setStore = (
+    items: T[],
+    pageSize: number,
+    total: number,
+    currentPage: number
+  ) => {
+    setStoreState((prev) => {
+      if(!items) return
+      return {
+        records: [
+    ...new Map(
+      [...prev.records, ...items].map(item => [item.id, item])
+    ).values()],
+        pageSize,
+        total,
+        currentPage,
+      };
+    });
+  };
+
+  return {
+    setStoreState,
+    store,
+    setStore,
+    dataStore: store?.records,
+    pageSize: store?.pageSize,
+  };
 };

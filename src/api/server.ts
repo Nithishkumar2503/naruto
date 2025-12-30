@@ -5,7 +5,7 @@ const baseUrl: string = `https://dattebayo-api.onrender.com`;
 export const GET = async ({ relativeUrl }: GetParamsProps) => {
   try {
     const apiUrl = `${baseUrl}${relativeUrl}`;
-    return fetch(apiUrl)
+    return fetch(apiUrl,)
       .then(async (res) => {
         const apiResult = await res.json();
         if (res.status === 200) {

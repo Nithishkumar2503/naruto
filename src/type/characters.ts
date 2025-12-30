@@ -14,7 +14,7 @@ export interface CharactersItemProps {
   personal: CharactersPersonalProps;
   rank: CharactersRankProps;
   tools: string[];
-  voiceActors: { english: string[]; japanese: string };
+  voiceActors: { english: string[]; japanese: string[] };
   id: string;
   name: string;
 }

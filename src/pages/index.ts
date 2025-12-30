@@ -1,2 +1,12 @@
+export { default as TailedBeast } from './Tailed-Beast';
 export { default as Main } from './Main';
 export { default as Character } from './Character';
+export { default as About } from './About';
+export { default as CharacterDetails } from './CharacterDetails';
+export { default as Contact } from './Contact';
+export { default as KekkeiGenkkai } from './Kekkei-Genkkai';
+export { default as Villages } from './Villages';
+export { default as Teams } from './Teams';
+export { default as Akatsuki } from './Akatsuki';
+export { default as Kara } from './Kara';
+export { default as Clans } from './Clans';

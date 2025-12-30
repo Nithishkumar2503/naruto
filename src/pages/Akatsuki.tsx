@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { GET } from "../api/server";
-import type { apiResult, CharactersItemProps, CharactersProps } from "../type";
+import type { apiResult, CharactersItemProps,  } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
 import { NoDataFound, SearchBox } from "../components";
@@ -17,9 +17,9 @@ const swipeImage = (images: string[]) => {
     </div>
   );
 };
-const characterCard = (item: CharactersItemProps) => {
+const AkatsukiCard = (item: CharactersItemProps) => {
   return (
-    <a href={"/characters/" + item?.id}>
+    <a href={"/akatsukie/" + item?.id}>
       <div className="items-center shadow-lg cursor-pointer shadow-primary hover:scale-105 rounded-lg  lg:w-56 w-80 bg-white  h-56   mx-auto">
         {swipeImage(item.images)}
         <h1 className="font-semibold mb- p-2 text-center my-auto text-black">
@@ -29,26 +29,25 @@ const characterCard = (item: CharactersItemProps) => {
     </a>
   );
 };
-
-const Character = () => {
+const Akatsukis = () => {
   const [page, setPage] = useState(1);
   const [searchName, setSearchName] = useState("");
   let loadMore = searchName
     ? `?page=${page}&name=` + searchName
     : `?page=${page}`;
 
-  const { setStore, store } = createDataStore<CharactersItemProps>();
+  const { setStore, store } = createDataStore<any>();
 
   const [loading, setLoading] = useState(false);
 
   const getApiRes = async () => {
     setLoading(true);
     try {
-      const response: apiResult<CharactersProps> = await GET({
-        relativeUrl: `/characters${loadMore}`,
+      const response: apiResult<any> = await GET({
+        relativeUrl: `/akatsuki${loadMore}`,
       });
       setStore(
-        response.result.characters,
+        response.result.akatsuki,
         response.result.pageSize,
         response.result.total,
         response.result.currentPage
@@ -65,6 +64,7 @@ const Character = () => {
   };
 
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const subCointainerRef=useRef<HTMLDivElement|null>(null)
   useEffect(() => {
     if (store.total == store.records.length) return;
     const div = containerRef.current;
@@ -74,7 +74,9 @@ const Character = () => {
       if (div.scrollTop + div.clientHeight >= div.scrollHeight - 10 && !loading)
         handleLoadMore();
     };
+   
     div.addEventListener("scroll", onScroll);
+    
     return () => div.removeEventListener("scroll", onScroll);
   }, [handleLoadMore]);
   // Fetch data
@@ -95,29 +97,28 @@ const Character = () => {
   return (
     <div className=" h-screen ">
       <PageHeader
-        heading="Characters"
-        subHeading="In the Naruto series, character articles"
+        heading="Akatsukis Members"
+        subHeading="In the Naruto series, Akatsukis articles"
       />
       <div className="flex ml-auto w-fit items-center content-center">
         <SearchBox
-          placeholder="search characters..."
+          placeholder="search Akatsukis..."
           onDispatch={handleSearchBox}
         />
         <h1 className="text-end text-secondary mx-2">
           {store?.records?.length + "/" + store?.total}
         </h1>
       </div>
-
       <div
         ref={containerRef}
         className="overflow-auto h-[85vh] bg-white rounded-lg py-4"
       >
-        <div className="flex flex-wrap  gap-4 justify-center mb-4">
+        <div ref={subCointainerRef} className="flex flex-wrap  gap-4 justify-center mb-4">
           {store?.records?.map((val) => (
-            <div key={val?.id}>{characterCard(val)}</div>
+            <div key={val?.id}>{AkatsukiCard(val)}</div>
           ))}
           {loading && (
-            <CharacterSkeleton
+            <VillagesSkeleton
               count={store?.records?.length == 0 ? 20 : 5}
               view={"flex"}
             />
@@ -128,9 +129,9 @@ const Character = () => {
                 setPage(1);
                 setSearchName("");
               }}
-              actionButton="All characters"
+              actionButton="All Villages"
               imagePath="/naruto-eat.png"
-              title="No character found!."
+              title="No Villages found!."
             />
           )}
         </div>
@@ -144,7 +145,7 @@ const viewEnum = {
   grid: "grid",
 } as const;
 
-const CharacterSkeleton = ({
+const VillagesSkeleton = ({
   count = 1,
   view,
 }: {
@@ -168,4 +169,4 @@ const CharacterSkeleton = ({
   );
 };
 
-export default Character;
+export default Akatsukis;
