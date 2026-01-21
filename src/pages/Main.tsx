@@ -22,8 +22,8 @@ const mainList = mainItem.map((val) => (
 function Main() {
   return (
     <div className="lg:min-h-screen">
-      <img className="md:w-[15vh] lg:block hidden select-none absolute bottom-0 lg:left-20 " src="/naruto.png" alt="" />
-      <img className="md:w-[20vh] lg:block hidden select-none absolute bottom-0  lg:right-20 " src="/pain.png" alt="" />
+      <img hidden className="md:w-[15vh] lg:block  select-none absolute bottom-0 lg:left-20 " src="/naruto.png" alt="" />
+      <img hidden className="md:w-[20vh] lg:block  select-none absolute bottom-0  lg:right-20 " src="/pain.png" alt="" />
       <img  src="/naruto-title.png" className=" mx-auto lg:w-80 w-40  bg-background " alt="" />
       <div className="flex flex-wrap lg:gap-12 gap-2 justify-center h-fit lg:py-12 ">
         {mainList}

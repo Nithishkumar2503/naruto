@@ -1,17 +1,15 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 
 interface SearchBoxProps {
   name?: string;
   label?: string;
   placeholder?: string;
-  onChange?: () => void;
   onDispatch?: any;
   buttonName?: string;
 }
 const Searchbox = ({
   name,
-  onChange,
   onDispatch,
   placeholder,
   buttonName,
@@ -21,8 +19,8 @@ const Searchbox = ({
   function handleFunction() {
     setIsShow(!isShow);
   }
-  let timer: number = 0;
-  function handleInput(event: Event) {
+  
+  function handleInput(event: React.ChangeEvent<HTMLInputElement>) {
     setValue(event?.target?.value);
   }
   return (

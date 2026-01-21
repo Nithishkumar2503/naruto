@@ -7,11 +7,11 @@ import { NoDataFound, SearchBox } from "../components";
 
 const ClansCard = (item: ClansItemProps) => {
   return (
-      <div className="items-center content-center shadow-lg cursor-default shadow-primary hover:scale-105 rounded-lg  lg:w-56 w-80 bg-white  h-56   mx-auto">
-        <h1 className="font-semibold mb- p-2 text-center my-auto text-black">
-          {item?.name}
-        </h1>
-      </div>
+    <div className="items-center content-center shadow-lg cursor-default shadow-primary hover:scale-105 rounded-lg  lg:w-56 w-80 bg-white  h-56   mx-auto">
+      <h1 className="font-semibold mb- p-2 text-center my-auto text-black">
+        {item?.name}
+      </h1>
+    </div>
   );
 };
 
@@ -22,9 +22,9 @@ const clans = () => {
     ? `?page=${page}&name=` + searchName
     : `?page=${page}`;
 
-  const { setStore, store } = createDataStore<ClansProps>();
+  const { setStore, store } = createDataStore<ClansItemProps>();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getApiRes = async () => {
     setLoading(true);
@@ -51,7 +51,7 @@ const clans = () => {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    if (store.total == store.records.length) return;
+    if (store?.total == store?.records?.length) return;
     const div = containerRef.current;
     if (!div) return;
 
@@ -91,7 +91,7 @@ const clans = () => {
       </div>
       <div
         ref={containerRef}
-        className="overflow-auto h-[85vh] bg-white rounded-lg py-4"
+        className="overflow-auto h-[84vh] bg-white rounded-lg py-4"
       >
         <div className="flex flex-wrap  gap-4 justify-center mb-4">
           {store?.records?.map((val) => (
@@ -103,7 +103,7 @@ const clans = () => {
               view={"flex"}
             />
           )}
-          {!loading && store?.records <= 0 && (
+          {!loading && store?.records?.length <= 0 && (
             <NoDataFound
               onDispatch={() => {
                 setPage(1);
@@ -124,13 +124,14 @@ const viewEnum = {
   flex: "flex",
   grid: "grid",
 } as const;
+type ViewEnum = (typeof viewEnum)[keyof typeof viewEnum];
 
 const ClansSkeleton = ({
   count = 1,
   view,
 }: {
   count?: number;
-  view?: viewEnum;
+  view?: ViewEnum;
 }) => {
   return (
     <div className={`${view == "flex" ? "flex flex-wrap  gap-4 " : ""} px-18`}>

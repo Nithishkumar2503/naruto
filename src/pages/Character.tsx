@@ -39,7 +39,7 @@ const Character = () => {
 
   const { setStore, store } = createDataStore<CharactersItemProps>();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getApiRes = async () => {
     setLoading(true);
@@ -110,7 +110,7 @@ const Character = () => {
 
       <div
         ref={containerRef}
-        className="overflow-auto h-[85vh] bg-white rounded-lg py-4"
+        className="overflow-auto lg:h-[84vh] bg-white rounded-lg py-4"
       >
         <div className="flex flex-wrap  gap-4 justify-center mb-4">
           {store?.records?.map((val) => (
@@ -122,7 +122,7 @@ const Character = () => {
               view={"flex"}
             />
           )}
-          {!loading && store?.records <= 0 && (
+          {!loading && store?.records?.length <= 0 && (
             <NoDataFound
               onDispatch={() => {
                 setPage(1);
@@ -143,13 +143,14 @@ const viewEnum = {
   flex: "flex",
   grid: "grid",
 } as const;
+type ViewEnum = (typeof viewEnum)[keyof typeof viewEnum];
 
 const CharacterSkeleton = ({
   count = 1,
   view,
 }: {
   count?: number;
-  view?: viewEnum;
+  view?: ViewEnum;
 }) => {
   return (
     <div className={`${view == "flex" ? "flex flex-wrap  gap-4 " : ""} px-18`}>

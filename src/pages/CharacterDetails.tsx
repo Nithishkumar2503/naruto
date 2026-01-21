@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { GET } from "../api/server";
-import type { CharactersItemProps, CharactersPersonalProps } from "../type";
+import type {  CharactersItemProps, CharactersPersonalProps } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
 import { FormLabel } from "../components";
@@ -15,10 +15,10 @@ interface PersonalProps {
   };
 }
 const personalCharacter = ({ name, images, personal }: PersonalProps) => {
-  const key = Object?.keys(personal);
-  const value = Object?.values(personal);
+  const key = Object?.keys(personal ?? {});
+  const value = Object?.values(personal ?? {});
   return (
-    <div className="w-full min-h-[40rem] mx-auto bg-white h-auto items-center md:px-20 p-2">
+    <div className="w-full min-h-160 mx-auto bg-white h-auto items-center md:px-20 p-2">
       <div className="flex gap-2">
         {images?.map((val: string) => {
           return (
@@ -51,26 +51,22 @@ const personalCharacter = ({ name, images, personal }: PersonalProps) => {
                   <ol className=" text-wrap wrap-break-word break-all">
                     {value[i]}
                   </ol>
-                ) : Object?.prototype?.toString?.call(value[i]) ==
+                ) : Object.prototype.toString.call(value[i]) ===
                   "[object Object]" ? (
                   <ol className="text-wrap">
-                    {Object?.keys(value[i])?.map(
-                      (val: string, index: string) => {
-                        return (
-                          <div className=" flex">
-                            <ul className="w-40">{val}:</ul>
-                            <ul className=" text-wrap wrap-break-word break-all">
-                              {Object?.values(value[i])[index]}
-                            </ul>
-                          </div>
-                        );
-                      }
-                    )}
+                    {Object.entries(
+                      value[i] as Record<string, React.ReactNode>,
+                    ).map(([key, val]) => (
+                      <div className="flex" key={key}>
+                        <ul className="w-40">{key}:</ul>
+                        <ul className="text-wrap break-all">{val}</ul>
+                      </div>
+                    ))}
                   </ol>
                 ) : Object?.prototype?.toString?.call(value[i]) ==
                   "[object Array]" ? (
                   <ol className="text-wrap wrap-break-word break-all">
-                    {value[i]?.map((val) => {
+                    {value[i]?.map((val: string) => {
                       return <ul className="">{val}</ul>;
                     })}
                   </ol>
@@ -95,7 +91,7 @@ interface Debut {
 }
 
 const debutChar = (debut: Debut) => {
-  if(!debut) return
+  if (!debut) return;
   return (
     <div className="w-full  mx-auto bg-white h-auto items-center md:px-20 p-2">
       <FormLabel label="first appearance" uppercase />
@@ -112,7 +108,7 @@ const debutChar = (debut: Debut) => {
 };
 
 const natureTypeChar = (natureType: string[]) => {
-  if(!natureType||natureType.length===0) return
+  if (!natureType || natureType.length === 0) return;
   return (
     <div className="w-full  mx-auto bg-white h-auto items-center md:px-20 p-2">
       <FormLabel label="nature Type" uppercase />
@@ -134,7 +130,7 @@ interface voiceActorProps {
   japanese: string[];
 }
 const voiceActorChar = (voiceActor: voiceActorProps) => {
-  if(!voiceActor) return
+  if (!voiceActor) return;
   return (
     <div className="w-full  mx-auto bg-white h-auto items-center md:px-20 p-2">
       <FormLabel label="voice Actor" uppercase />
@@ -144,14 +140,11 @@ const voiceActorChar = (voiceActor: voiceActorProps) => {
             <div className="flex gap-2 mb-2">
               <h2 className="capitalize w-20">{key}</h2>
               <div>
-                {Object.prototype.toString.call(value)=='[object Array]'?  
-                value?.map((val) => {
-                  return <h1>‣ {val}</h1>;
-                })
-                :
-                <h1>‣ {value}</h1>
-                }
-
+                {Array.isArray(value) ? (
+                  value.map((val, index) => <h1 key={index}>‣ {val}</h1>)
+                ) : (
+                  <h1>‣ {value as React.ReactNode}</h1>
+                )}
               </div>
             </div>
           );
@@ -162,7 +155,7 @@ const voiceActorChar = (voiceActor: voiceActorProps) => {
 };
 
 const jutsusChar = (jutsus: string[]) => {
-  if(!jutsus||jutsus.length==0) return
+  if (!jutsus || jutsus.length == 0) return;
   return (
     <div className="w-full  mx-auto bg-white h-auto items-center md:px-20 p-2">
       <FormLabel label="jutsus" uppercase />
@@ -170,7 +163,7 @@ const jutsusChar = (jutsus: string[]) => {
         {jutsus?.map((val: string) => {
           return (
             <div
-              className="group relative flex-shrink-0 w-64
+              className="group relative shrink-0 w-64
               px-5 py-4
               backdrop-blur
               border border-gray-200 text
@@ -188,15 +181,15 @@ const jutsusChar = (jutsus: string[]) => {
 };
 
 const toolsChar = (tools: string[]) => {
-  if(!tools||tools.length==0) return
-  
+  if (!tools || tools.length == 0) return;
+
   return (
     <div className="w-full  mx-auto bg-white h-auto items-center md:px-20 p-2">
       <FormLabel label="Tools" uppercase />
       <div className="p-2 flex flex-wrap gap-2">
         {tools?.map((val: string) => {
           return (
-            <div className=" rounded-2xl bg-gradient-to-r from-orange-200 to-blue-100 cursor-default w-fit border border-gray-200 hover:scale-105 px-10 p-2">
+            <div className=" rounded-2xl bg-linear-to-r from-orange-200 to-blue-100 cursor-default w-fit border border-gray-200 hover:scale-105 px-10 p-2">
               <h2>{val}</h2>
             </div>
           );
@@ -206,8 +199,8 @@ const toolsChar = (tools: string[]) => {
   );
 };
 
-function FamilyCard({ family }: CharactersFamilyProps) {
-  if(!family) return
+function FamilyCard({ family }: CharactersItemProps) {
+  if (!family) return;
   const key = Object?.keys(family);
   const value = Object?.values(family);
   return (
@@ -217,7 +210,7 @@ function FamilyCard({ family }: CharactersFamilyProps) {
 
       {/* Content */}
       <div className="grid gap-4 p-2 sm:grid-cols-2 lg:grid-cols-3">
-        {key?.map((val, index) => (
+        {key?.map((val, index:number) => (
           <div
             key={val}
             className="group rounded-xl border border-primary bg-primary cursor-default  p-4 transition-all hover:-translate-y-1 hover:shadow-md "
@@ -234,9 +227,9 @@ function FamilyCard({ family }: CharactersFamilyProps) {
 }
 
 const characterDetails = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const characterName = location?.pathname?.split("/")?.[2];
-  const { setStore, store } = createDataStore();
+  const { setStore, store } = createDataStore<CharactersItemProps>();
   const getApiRes = async () => {
     setLoading(true);
     try {
@@ -247,7 +240,7 @@ const characterDetails = () => {
         [response?.result],
         response?.result?.pageSize,
         response?.result?.total,
-        response?.result?.currentPage
+        response?.result?.currentPage,
       );
     } catch (error) {
       throw error;

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { GET } from "../api/server";
-import type { apiResult } from "../type";
+import type { apiResult, CharactersItemProps, CharactersProps } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
 import { NoDataFound, SearchBox } from "../components";
@@ -17,7 +17,7 @@ const swipeImage = (images: string[]) => {
     </div>
   );
 };
-const charactersCard = (item: any) => {
+const charactersCard = (item: CharactersItemProps) => {
   return (
     <a href={"/tailed-beasts/" + item?.id}>
       <div className="items-center shadow-lg cursor-pointer shadow-primary hover:scale-105 rounded-lg  lg:w-56 w-80 bg-white  h-56   mx-auto">
@@ -37,14 +37,14 @@ const TailBeasts = () => {
     ? `?page=${page}&name=` + searchName
     : `?page=${page}`;
 
-  const { setStore, store } = createDataStore<any>();
+  const { setStore, store } = createDataStore<CharactersItemProps>();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getApiRes = async () => {
     setLoading(true);
     try {
-      const response: apiResult<any> = await GET({
+      const response: apiResult<CharactersProps> = await GET({
         relativeUrl: `/tailed-beasts${loadMore}`,
       });
       setStore(
@@ -109,7 +109,7 @@ const TailBeasts = () => {
       </div>
       <div
         ref={containerRef}
-        className="overflow-auto h-[85vh] bg-white rounded-lg py-4"
+        className="overflow-auto h-[84vh] bg-white rounded-lg py-4"
       >
         <div className="flex flex-wrap  gap-4 justify-center mb-4">
           {store?.records?.map((val) => (
@@ -121,7 +121,7 @@ const TailBeasts = () => {
               view={"flex"}
             />
           )}
-          {!loading && store?.records <= 0 && (
+          {!loading && store?.records?.length <= 0 && (
             <NoDataFound
               onDispatch={() => {
                 setPage(1);
@@ -142,13 +142,14 @@ const viewEnum = {
   flex: "flex",
   grid: "grid",
 } as const;
+type ViewEnum = (typeof viewEnum)[keyof typeof viewEnum];
 
 const TailBeastsSkeleton = ({
   count = 1,
   view,
 }: {
   count?: number;
-  view?: viewEnum;
+  view?: ViewEnum;
 }) => {
   return (
     <div className={`${view == "flex" ? "flex flex-wrap  gap-4 " : ""} px-18`}>

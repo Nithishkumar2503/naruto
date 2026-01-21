@@ -1,5 +1,8 @@
 export interface CharactersProps {
   characters: CharactersItemProps[];
+  kara:CharactersItemProps[];
+  akatsuki:CharactersItemProps[]
+  "tailed-beasts":CharactersItemProps[]
   currentPage: number;
   pageSize: number;
   total: number;
@@ -25,28 +28,28 @@ export interface CharactersPartProps {
 }
 
 export interface CharactersPersonalProps {
-  affiliation: string[];
-  age: {
-    "Academy Graduate": string;
-    "Part I": string;
-    "Part II": string;
+  affiliation?: string[];
+  age?: {
+    "Academy Graduate"?: string;
+    "Part I"?: string;
+    "Part II"?: string;
   };
-  birthdate: string;
-  bloodType: string;
-  clan: string;
-  classification: string[];
-  height: {
-    "Blank Period": string;
-    "Part I": string;
-    "Part II": string;
+  birthdate?: string;
+  bloodType?: string;
+  clan?: string;
+  classification?: string[];
+  height?: {
+    "Blank Period"?: string;
+    "Part I"?: string;
+    "Part II"?: string;
   };
-  kekkeiGenkai: string[];
-  occupation: string[];
-  sex: string;
-  tailedBeast: string;
-  team: string[];
-  titles: string;
-  weight: CharactersPartProps;
+  kekkeiGenkai?: string[];
+  occupation?: string[];
+  sex?: string;
+  tailedBeast?: string;
+  team?: string[];
+  titles?: string;
+  weight?: CharactersPartProps;
 }
 
 export interface CharactersDebutProps {
