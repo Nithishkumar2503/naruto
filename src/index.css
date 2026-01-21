@@ -7,10 +7,8 @@
   line-height: 1.5;
   font-weight: 400;
 
-  overflow: hidden;
-  color-scheme: light dark;
   color: black;
-  background-color: #fcba21;
+  background-color: black;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -35,16 +33,16 @@ body {
   min-height: 100vh;
 }
 
-  button {
-    cursor: pointer;
-  }
+button {
+  cursor: pointer;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
- 
+
   button {
     cursor: pointer;
   }
@@ -58,16 +56,12 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: transparent; 
+  background-color: black;
 }
 
 /* Thumb */
 ::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: lightgray;
   border-radius: 10px;
-}
-
-/* Hover */
-::-webkit-scrollbar-thumb:hover {
-  background: transparent;
+  cursor: pointer;
 }

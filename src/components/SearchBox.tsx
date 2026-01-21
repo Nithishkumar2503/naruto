@@ -1,17 +1,15 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 
 interface SearchBoxProps {
   name?: string;
   label?: string;
   placeholder?: string;
-  onChange?: () => void;
   onDispatch?: any;
   buttonName?: string;
 }
 const Searchbox = ({
   name,
-  onChange,
   onDispatch,
   placeholder,
   buttonName,
@@ -21,8 +19,8 @@ const Searchbox = ({
   function handleFunction() {
     setIsShow(!isShow);
   }
-  let timer: number = 0;
-  function handleInput(event: Event) {
+  
+  function handleInput(event: React.ChangeEvent<HTMLInputElement>) {
     setValue(event?.target?.value);
   }
   return (
@@ -32,15 +30,15 @@ const Searchbox = ({
         <IoSearchSharp
           onClick={handleFunction}
           size={20}
-          className="text-gray-500  h-10 mr-2  w-10 hover:scale-110 cursor-pointer  mx-auto "
+          className="text-gray-500  lg:h-10 mr-2   h-6 w-10 hover:scale-110 cursor-pointer  mx-auto "
         />
       )}
       {isShow && (
         <div className="">
           <input
             autoFocus
-            className=" px-4  p-2 h-10 bg-white border text-gray-700
-    border-gray-200 rounded-l-lg
+            className=" px-4  lg:p-2 lg:h-10 bg-white border 
+    border-gray-500 rounded-l-lg
     focus:outline-none
     animate-slideInLeft"
             name={name || "searchInput"}
@@ -59,16 +57,15 @@ const Searchbox = ({
             }}
             value={value}
           />
-
           <button
-            className={`rounded-r-lg bg-primary p-2 px-4 text-white`}
+            className={`rounded-r-lg bg-primary lg:p-2 lg:px-4 px-2 text-white`}
             onClick={() => {
               setIsShow(false);
               setValue("");
               if (typeof onDispatch === "function") onDispatch(value);
             }}
           >
-            {value ? buttonName || "Search" : "X"}
+            {value ? buttonName || "✓" : "X"}
           </button>
         </div>
       )}

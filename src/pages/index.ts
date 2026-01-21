@@ -8,5 +8,7 @@ export { default as KekkeiGenkkai } from './Kekkei-Genkkai';
 export { default as Villages } from './Villages';
 export { default as Teams } from './Teams';
 export { default as Akatsuki } from './Akatsuki';
-export { default as Kara } from './Kara';
 export { default as Clans } from './Clans';
+export { default as Documents } from './Documents';
+export { default as SocialMedia } from './SocialMedia';
+export { default as Kara } from './Kara';

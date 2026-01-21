@@ -1,6 +1,5 @@
-import { FormError, FormLabel } from ".";
+import { FormLabel } from ".";
 
-type TextType = "text" | "tel" | "number" | "textarea";
 
 interface Props {
   value?: string;
@@ -17,10 +16,7 @@ interface Props {
   string?: string;
   id?: string;
   classes?: string;
-  textType?: TextType;
   maxLength?: number;
-  maxlimit?: number;
-  error?: string;
 }
 
 const inputText = ({
@@ -36,28 +32,25 @@ const inputText = ({
   id,
   classes,
   onDispatch,
-  textType = "text",
   maxLength,
-  maxlimit,
-  error,
 }: Props) => {
-  const onInput: (val: React.ChangeEvent<HTMLInputElement>) => void = (event:React.ChangeEvent<HTMLInputElement>) => {
+  const onInput: (val: React.ChangeEvent<HTMLTextAreaElement>) => void = (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     if (typeof onDispatch == "function") onDispatch(event?.target?.value);
   };
   return (
     <div>
       <FormLabel label={label} optional={optional} mandatory={mandatory} />
-      <input
+      <textarea
         maxLength={maxLength}
-        max={maxlimit}
-        className={`${classes} w-full bg-gray-100 p-2  text-sm text-gray-700 border border-primary rounded-md 
+        className={`${classes} min-h-30 max-h-auto w-full bg-gray-100 p-2 text-sm text-gray-700 border border-primary rounded-md 
          focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary
          transition`}
         id={id}
         name={name}
         disabled={disable}
         autoFocus={autofocus}
-        type={textType}
         onInput={onInput}
         value={value}
         placeholder={placeholder}
@@ -65,7 +58,6 @@ const inputText = ({
           if (typeof onChange == "function") onChange(val);
         }}
       />
-      <FormError error={error} />
     </div>
   );
 };

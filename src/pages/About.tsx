@@ -1,10 +1,10 @@
 const about = () => {
   return (
     <div className=" ">
-      <h1 className="text-center font-semibold text-3xl text-gray-500">
+      <h1 className="text-center font-semibold text-3xl text-white">
         About us
       </h1>
-      <div className=" w-[50vw] mx-auto lg:p-10 text-lg">
+      <div className=" w-[50vw] text-gray-500 mx-auto lg:p-10 text-lg">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia,
         officiis ad quis nemo nobis eveniet error ipsam assumenda nostrum. Vero
         voluptas nesciunt eum modi? Nisi ratione laboriosam repellat placeat

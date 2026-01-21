@@ -3,17 +3,7 @@ import { GET } from "../api/server";
 import type { apiResult, ClansItemProps, ClansProps } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
-import { NoDataFound, SearchBox } from "../components";
-
-const ClansCard = (item: ClansItemProps) => {
-  return (
-      <div className="items-center content-center shadow-lg cursor-default shadow-primary hover:scale-105 rounded-lg  lg:w-56 w-80 bg-white  h-56   mx-auto">
-        <h1 className="font-semibold mb- p-2 text-center my-auto text-black">
-          {item?.name}
-        </h1>
-      </div>
-  );
-};
+import { CharecterCard, NoDataFound, SearchBox } from "../components";
 
 const clans = () => {
   const [page, setPage] = useState(1);
@@ -22,9 +12,9 @@ const clans = () => {
     ? `?page=${page}&name=` + searchName
     : `?page=${page}`;
 
-  const { setStore, store } = createDataStore<ClansProps>();
+  const { setStore, store } = createDataStore<ClansItemProps>();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getApiRes = async () => {
     setLoading(true);
@@ -36,7 +26,7 @@ const clans = () => {
         response.result.clans,
         response.result.pageSize,
         response.result.total,
-        response.result.currentPage
+        response.result.currentPage,
       );
     } catch (err) {
       throw err;
@@ -51,7 +41,7 @@ const clans = () => {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    if (store.total == store.records.length) return;
+    if (store?.total == store?.records?.length) return;
     const div = containerRef.current;
     if (!div) return;
 
@@ -91,11 +81,16 @@ const clans = () => {
       </div>
       <div
         ref={containerRef}
-        className="overflow-auto h-[85vh] bg-white rounded-lg py-4"
+        className="overflow-auto  lg:h-[84vh]  h-[81vh] rounded-lg py-4"
       >
         <div className="flex flex-wrap  gap-4 justify-center mb-4">
           {store?.records?.map((val) => (
-            <div key={val?.id}>{ClansCard(val)}</div>
+            <div key={val?.id}>
+              {CharecterCard({
+                name: val.name,
+                id: val.id,
+              })}
+            </div>
           ))}
           {loading && (
             <ClansSkeleton
@@ -103,7 +98,7 @@ const clans = () => {
               view={"flex"}
             />
           )}
-          {!loading && store?.records <= 0 && (
+          {!loading && store?.records?.length <= 0 && (
             <NoDataFound
               onDispatch={() => {
                 setPage(1);
@@ -124,20 +119,23 @@ const viewEnum = {
   flex: "flex",
   grid: "grid",
 } as const;
+type ViewEnum = (typeof viewEnum)[keyof typeof viewEnum];
 
 const ClansSkeleton = ({
   count = 1,
   view,
 }: {
   count?: number;
-  view?: viewEnum;
+  view?: ViewEnum;
 }) => {
   return (
-    <div className={`${view == "flex" ? "flex flex-wrap  gap-4 " : ""} px-18`}>
+    <div
+      className={`${view == "flex" ? " lg:flex lg:flex-wrap  gap-4 " : ""} lg:px-18`}
+    >
       {Array.from({ length: count }).map((_) => (
         <div
           key={"crskeleton" + Date.now() + Math.random()}
-          className="w-56 bg-white  h-56 mx-auto rounded-lg"
+          className="lg:w-56  w-[97vw] lg:px-0 px-6 bg-whiteo  h-56 mx-auto rounded-lg"
         >
           <div className="h-40 w-full animate-pulse bg-gray-200 rounded-lg"></div>
           <div className="w-full flex justify-center mt-4  ">

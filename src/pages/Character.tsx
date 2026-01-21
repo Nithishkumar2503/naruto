@@ -3,32 +3,7 @@ import { GET } from "../api/server";
 import type { apiResult, CharactersItemProps, CharactersProps } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
-import { NoDataFound, SearchBox } from "../components";
-
-const swipeImage = (images: string[]) => {
-  return (
-    <div className="flex overflow-x-clip bg-white rounded-lg">
-      <img
-        key={images[0]}
-        src={images[0] || "/no-image.png"}
-        className="w-full h-44 object-cover rounded-t-lg"
-        alt=""
-      />
-    </div>
-  );
-};
-const characterCard = (item: CharactersItemProps) => {
-  return (
-    <a href={"/characters/" + item?.id}>
-      <div className="items-center shadow-lg cursor-pointer shadow-primary hover:scale-105 rounded-lg  lg:w-56 w-80 bg-white  h-56   mx-auto">
-        {swipeImage(item.images)}
-        <h1 className="font-semibold mb- p-2 text-center my-auto text-black">
-          {item?.name}
-        </h1>
-      </div>
-    </a>
-  );
-};
+import { CharecterCard, NoDataFound, SearchBox } from "../components";
 
 const Character = () => {
   const [page, setPage] = useState(1);
@@ -39,7 +14,7 @@ const Character = () => {
 
   const { setStore, store } = createDataStore<CharactersItemProps>();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getApiRes = async () => {
     setLoading(true);
@@ -51,7 +26,7 @@ const Character = () => {
         response.result.characters,
         response.result.pageSize,
         response.result.total,
-        response.result.currentPage
+        response.result.currentPage,
       );
     } catch (err) {
       throw err;
@@ -110,11 +85,17 @@ const Character = () => {
 
       <div
         ref={containerRef}
-        className="overflow-auto h-[85vh] bg-white rounded-lg py-4"
+        className="overflow-auto lg:h-[84vh] h-[81vh]   rounded-lg py-4"
       >
         <div className="flex flex-wrap  gap-4 justify-center mb-4">
           {store?.records?.map((val) => (
-            <div key={val?.id}>{characterCard(val)}</div>
+            <div key={val?.id}>
+              {CharecterCard({
+                name: val.name,
+                id: val.id,
+                images: val.images,
+              })}
+            </div>
           ))}
           {loading && (
             <CharacterSkeleton
@@ -122,7 +103,7 @@ const Character = () => {
               view={"flex"}
             />
           )}
-          {!loading && store?.records <= 0 && (
+          {!loading && store?.records?.length <= 0 && (
             <NoDataFound
               onDispatch={() => {
                 setPage(1);
@@ -143,20 +124,23 @@ const viewEnum = {
   flex: "flex",
   grid: "grid",
 } as const;
+type ViewEnum = (typeof viewEnum)[keyof typeof viewEnum];
 
 const CharacterSkeleton = ({
   count = 1,
   view,
 }: {
   count?: number;
-  view?: viewEnum;
+  view?: ViewEnum;
 }) => {
   return (
-    <div className={`${view == "flex" ? "flex flex-wrap  gap-4 " : ""} px-18`}>
+    <div
+      className={`${view == "flex" ? "lg:flex lg:flex-wrap  gap-4 " : ""}   lg:px-18`}
+    >
       {Array.from({ length: count }).map((_) => (
         <div
           key={"crskeleton" + Date.now() + Math.random()}
-          className="w-56 bg-white  h-56 mx-auto rounded-lg"
+          className="lg:w-56  w-[97vw] lg:px-0 px-6 bg-whiteo  h-56 mx-auto rounded-lg"
         >
           <div className="h-40 w-full animate-pulse bg-gray-200 rounded-lg"></div>
           <div className="w-full flex justify-center mt-4  ">
