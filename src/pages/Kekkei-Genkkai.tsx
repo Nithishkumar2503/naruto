@@ -5,15 +5,6 @@ import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
 import { CharecterCard, NoDataFound, SearchBox } from "../components";
 
-const genkaiCard = (item: TeamsItemProps) => {
-  return (
-      <div className="items-center content-center shadow-lg cursor-pointer shadow-primary hover:scale-105 rounded-lg  lg:w-56 w-80 bg-whiteo  h-56   mx-auto">
-        <h1 className="font-semibold mb- p-2 text-center my-auto text-black">
-          {item?.name}
-        </h1>
-      </div>
-  );
-};
 
 const genkai = () => {
   const [page, setPage] = useState(1);
