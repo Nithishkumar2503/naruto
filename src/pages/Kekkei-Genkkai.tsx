@@ -3,7 +3,7 @@ import { GET } from "../api/server";
 import type { apiResult, TeamsItemProps, TeamsProps,  } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
-import { CharecterCard, NoDataFound, SearchBox } from "../components";
+import { CharecterCard, NoDataFound, SearchBox, SEO } from "../components";
 
 
 const genkai = () => {
@@ -70,6 +70,28 @@ const genkai = () => {
   }
   return (
     <div className=" h-screen ">
+      <SEO
+  title="Kekkei Genkai"
+  description="Explore Kekkei Genkai in Naruto, including rare bloodline abilities, their users, and their impact in battle."
+  keywords="Kekkei Genkai, Naruto bloodline abilities, Sharingan, Byakugan, Naruto powers, anime abilities"
+  image="https://naruto-lovat-nine.vercel.app/default-og-image.jpg"
+  url="https://naruto-lovat-nine.vercel.app/kekkei-genkai"
+  type="website"
+  author="Naruto Universe"
+  robots="index, follow"
+  canonical="https://naruto-lovat-nine.vercel.app/kekkei-genkai"
+  siteName="Naruto Universe"
+  twitterCard="summary_large_image"
+  twitterCreator="@narutouniverse"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Kekkei Genkai",
+    url: "https://naruto-lovat-nine.vercel.app/kekkei-genkai",
+    description:
+      "Explore Kekkei Genkai in Naruto, including rare bloodline abilities and their users.",
+  }}
+/>
       <PageHeader
         heading="Kekkei genkai's"
         subHeading="In the Naruto series, kekkai-genkai's articles"

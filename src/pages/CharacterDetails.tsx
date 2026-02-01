@@ -8,7 +8,7 @@ import type {
 } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
-import { FormLabel } from "../components";
+import { FormLabel, SEO } from "../components";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 interface PersonalProps {
@@ -325,6 +325,41 @@ const characterDetails = () => {
       <div className="overflow-auto lg:h-[84vh]   h-[81vh]  bg-whiteo rounded-lg py-4">
         {getOne && (
           <div>
+            <SEO
+              title={`${getOne.name}`}
+              description={`Learn about ${getOne.name}, including background, abilities, clan, nature type, and role in the Naruto universe.`}
+              keywords={`${getOne.name}, Naruto ${getOne.name}, ${getOne.name} powers, ${getOne.name} clan, Naruto character`}
+              image={
+                getOne.images?.[0] ||
+                "https://naruto-lovat-nine.vercel.app/default-og-image.jpg"
+              }
+              url={`https://naruto-lovat-nine.vercel.app/characters/${getOne.id}`}
+              type="article"
+              author="Naruto Universe"
+              robots="index, follow"
+              canonical={`https://naruto-lovat-nine.vercel.app/characters/${getOne.id}`}
+              siteName="Naruto Universe"
+              twitterCard="summary_large_image"
+              twitterCreator="@narutouniverse"
+              structuredData={{
+                "@context": "https://schema.org",
+                "@type": "Article",
+                headline: getOne.name,
+                description: `Learn about ${getOne.name}, including background, abilities, clan, nature type, and role in the Naruto universe.`,
+                image:
+                  getOne.images?.[0] ||
+                  "https://naruto-lovat-nine.vercel.app/default-og-image.jpg",
+                author: {
+                  "@type": "Organization",
+                  name: "Naruto Universe",
+                },
+                publisher: {
+                  "@type": "Organization",
+                  name: "Naruto Universe",
+                },
+                mainEntityOfPage: `https://naruto-lovat-nine.vercel.app/characters/${getOne.id}`,
+              }}
+            />
             {personalCharacter({
               name: getOne?.name,
               images: getOne?.images,

@@ -2,6 +2,7 @@ interface GetParamsProps {
   relativeUrl: string;
 }
 const baseUrl: string = `https://dattebayo-api.onrender.com`;
+const alternateUrl: string = `https://api.jikan.moe/v4`;
 export const GET = async ({ relativeUrl }: GetParamsProps) => {
   try {
     const apiUrl = `${baseUrl}${relativeUrl}`;

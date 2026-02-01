@@ -3,7 +3,7 @@ import { GET } from "../api/server";
 import type { apiResult, VillageItemProps, VillageProps } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
-import { CharecterCard, NoDataFound, SearchBox } from "../components";
+import { CharecterCard, NoDataFound, SearchBox, SEO } from "../components";
 
 
 const Villages = () => {
@@ -71,6 +71,28 @@ const Villages = () => {
   }
   return (
     <div className=" h-screen ">
+      <SEO
+  title="Naruto Villages"
+  description="Discover the hidden villages of Naruto and learn about their leaders, shinobi, and importance in the Naruto world."
+  keywords="Naruto villages, Hidden Leaf Village, Hidden Sand Village, Naruto world, shinobi villages"
+  image="https://naruto-lovat-nine.vercel.app/default-og-image.jpg"
+  url="https://naruto-lovat-nine.vercel.app/villages"
+  type="website"
+  author="Naruto Universe"
+  robots="index, follow"
+  canonical="https://naruto-lovat-nine.vercel.app/villages"
+  siteName="Naruto Universe"
+  twitterCard="summary_large_image"
+  twitterCreator="@narutouniverse"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Naruto Villages",
+    url: "https://naruto-lovat-nine.vercel.app/villages",
+    description:
+      "Discover the hidden villages of Naruto and learn about their leaders, shinobi, and history.",
+  }}
+/>
       <PageHeader
         heading="Villages"
         subHeading="In the Naruto series, Villages articles"
