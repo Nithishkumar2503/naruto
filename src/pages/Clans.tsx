@@ -3,12 +3,12 @@ import { GET } from "../api/server";
 import type { apiResult, ClansItemProps, ClansProps } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
-import { CharecterCard, NoDataFound, SearchBox } from "../components";
+import { CharecterCard, NoDataFound, SearchBox, SEO } from "../components";
 
 const clans = () => {
   const [page, setPage] = useState(1);
   const [searchName, setSearchName] = useState("");
-  let loadMore = searchName
+  const loadMore = searchName
     ? `?page=${page}&name=` + searchName
     : `?page=${page}`;
 
@@ -73,6 +73,28 @@ const clans = () => {
         heading="Clans"
         subHeading="In the Naruto series, Clans articles"
       />
+      <SEO
+  title="Naruto Clans"
+  description="Explore the legendary clans of Naruto, their history, bloodlines, and powerful abilities across the shinobi world."
+  keywords="Naruto clans, Uchiha clan, Hyuga clan, Uzumaki clan, Naruto bloodlines, anime clans"
+  image="https://naruto-lovat-nine.vercel.app/default-og-image.jpg"
+  url="https://naruto-lovat-nine.vercel.app/clans"
+  type="website"
+  author="Naruto Universe"
+  robots="index, follow"
+  canonical="https://naruto-lovat-nine.vercel.app/clans"
+  siteName="Naruto Universe"
+  twitterCard="summary_large_image"
+  twitterCreator="@narutouniverse"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Naruto Clans",
+    url: "https://naruto-lovat-nine.vercel.app/clans",
+    description:
+      "Explore the legendary clans of Naruto, their history, bloodlines, and abilities.",
+  }}
+/>
       <div className="flex ml-auto w-fit items-center content-center">
         <SearchBox placeholder="search Clans..." onDispatch={handleSearchBox} />
         <h1 className="text-end text-secondary mx-2">

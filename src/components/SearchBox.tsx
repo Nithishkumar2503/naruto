@@ -14,8 +14,8 @@ const Searchbox = ({
   placeholder,
   buttonName,
 }: SearchBoxProps) => {
-  let [value, setValue] = useState("");
-  let [isShow, setIsShow] = useState<boolean>(false);
+  const [value, setValue] = useState("");
+  const [isShow, setIsShow] = useState<boolean>(false);
   function handleFunction() {
     setIsShow(!isShow);
   }

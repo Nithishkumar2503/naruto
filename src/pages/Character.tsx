@@ -3,12 +3,12 @@ import { GET } from "../api/server";
 import type { apiResult, CharactersItemProps, CharactersProps } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
-import { CharecterCard, NoDataFound, SearchBox } from "../components";
+import { CharecterCard, NoDataFound, SearchBox, SEO } from "../components";
 
 const Character = () => {
   const [page, setPage] = useState(1);
   const [searchName, setSearchName] = useState("");
-  let loadMore = searchName
+  const loadMore = searchName
     ? `?page=${page}&name=` + searchName
     : `?page=${page}`;
 
@@ -69,6 +69,28 @@ const Character = () => {
   }
   return (
     <div className=" h-screen ">
+      <SEO
+  title="Naruto Characters"
+  description="Browse Naruto characters and discover iconic shinobi, their stories, powers, and roles in the Naruto universe."
+  keywords="Naruto characters, Naruto shinobi, Naruto heroes, Naruto anime characters, Naruto character list"
+  image="https://naruto-lovat-nine.vercel.app/default-og-image.jpg"
+  url="https://naruto-lovat-nine.vercel.app/characters"
+  type="website"
+  author="Naruto Universe"
+  robots="index, follow"
+  canonical="https://naruto-lovat-nine.vercel.app/characters"
+  siteName="Naruto Universe"
+  twitterCard="summary_large_image"
+  twitterCreator="@narutouniverse"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Naruto Characters",
+    url: "https://naruto-lovat-nine.vercel.app/characters",
+    description:
+      "Browse Naruto characters and discover iconic shinobi, their stories, and powers.",
+  }}
+/>
       <PageHeader
         heading="Characters"
         subHeading="In the Naruto series, character articles"

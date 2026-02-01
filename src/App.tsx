@@ -1,3 +1,4 @@
+import { FloatingButton } from "./components";
 import {
   About,
   Akatsuki,
@@ -8,6 +9,7 @@ import {
   Kara,
   KekkeiGenkkai,
   Main,
+  Support,
   TailedBeast,
   Teams,
   Villages,
@@ -28,17 +30,7 @@ function App() {
         alt=""
       />
       <div className="lg:min-h-screen z-50 relative  items-center   content-center lg:min-w-screen">
-        <div className="lg:w-[80vw] lg:min-h-screen overflow-hidden items-center content-center m-auto z-40 ">
-          {location.pathname !== "/" && (
-            <h1
-              className="cursor-pointer lg:block hidden absolute lg:top-10 top-4 left-2"
-              onClick={() => {
-                history.back();
-              }}
-            >
-              {"Go Back"}
-            </h1>
-          )}
+        <div className="lg:w-[80vw]  lg:min-h-screen overflow-hidden items-center content-center m-auto z-40 ">
           <Routes>
             <Route path="/" Component={Main}></Route>
             <Route path="/about" Component={About}></Route>
@@ -61,11 +53,17 @@ function App() {
             <Route path="/kara/:id" Component={CharacterDetails}></Route>
             <Route path="/villages" Component={Villages}></Route>
             <Route path="/clans" Component={Clans}></Route>
-            <Route path="/characters/:charId" Component={CharacterDetails} />
+            <Route path="/characters/:charId" Component={CharacterDetails} /> 
+
+            <Route path="/support" Component={Support}></Route>
+
           </Routes>
         </div>
       </div>
+      {location.pathname !== "/support"&&
+    <FloatingButton />
 
+      }
       <footer
         className="fixed bottom-2 left-1/2 z-50  -translate-x-1/2 w-[95%] sm:w-auto flex  sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm sm:text-base underline px-3 py-1
 "

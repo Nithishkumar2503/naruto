@@ -9,7 +9,7 @@ import { CharecterCard, NoDataFound, SearchBox } from "../components";
 const TailBeasts = () => {
   const [page, setPage] = useState(1);
   const [searchName, setSearchName] = useState("");
-  let loadMore = searchName
+  const loadMore = searchName
     ? `?page=${page}&name=` + searchName
     : `?page=${page}`;
 

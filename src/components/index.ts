@@ -11,3 +11,5 @@ export { default as SubmitButton } from "./SubmitButton";
 export { default as FormError } from "./FormError";
 export { default as CharecterCard } from "./CharecterCard";
 export { default as SwipeImage } from "./SwipeImage";
+export { default as SEO } from "./SEO";
+export { default as FloatingButton } from "./FloatingButton";

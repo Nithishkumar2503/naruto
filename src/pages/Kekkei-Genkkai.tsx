@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { GET } from "../api/server";
-import type { apiResult, TeamsItemProps, TeamsProps,  } from "../type";
+import type { apiResult, TeamsItemProps, TeamsProps } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
-import { CharecterCard, NoDataFound, SearchBox } from "../components";
-
+import { CharecterCard, NoDataFound, SearchBox, SEO } from "../components";
 
 const genkai = () => {
   const [page, setPage] = useState(1);
   const [searchName, setSearchName] = useState("");
-  let loadMore = searchName
+  const loadMore = searchName
     ? `?page=${page}&name=` + searchName
     : `?page=${page}`;
 
@@ -27,7 +26,7 @@ const genkai = () => {
         response.result["kekkei-genkai"],
         response.result.pageSize,
         response.result.total,
-        response.result.currentPage
+        response.result.currentPage,
       );
     } catch (err) {
       throw err;
@@ -42,7 +41,7 @@ const genkai = () => {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    if (store.total ===store.records.length) return;
+    if (store.total === store.records.length) return;
     const div = containerRef.current;
     if (!div) return;
 
@@ -70,6 +69,28 @@ const genkai = () => {
   }
   return (
     <div className=" h-screen ">
+      <SEO
+        title="Kekkei Genkai"
+        description="Explore Kekkei Genkai in Naruto, including rare bloodline abilities, their users, and their impact in battle."
+        keywords="Kekkei Genkai, Naruto bloodline abilities, Sharingan, Byakugan, Naruto powers, anime abilities"
+        image="https://naruto-lovat-nine.vercel.app/default-og-image.jpg"
+        url="https://naruto-lovat-nine.vercel.app/kekkei-genkai"
+        type="website"
+        author="Naruto Universe"
+        robots="index, follow"
+        canonical="https://naruto-lovat-nine.vercel.app/kekkei-genkai"
+        siteName="Naruto Universe"
+        twitterCard="summary_large_image"
+        twitterCreator="@narutouniverse"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Kekkei Genkai",
+          url: "https://naruto-lovat-nine.vercel.app/kekkei-genkai",
+          description:
+            "Explore Kekkei Genkai in Naruto, including rare bloodline abilities and their users.",
+        }}
+      />
       <PageHeader
         heading="Kekkei genkai's"
         subHeading="In the Naruto series, kekkai-genkai's articles"
@@ -90,7 +111,7 @@ const genkai = () => {
         <div className="flex flex-wrap  gap-4 justify-center mb-4">
           {store?.records?.map((val) => (
             <div key={val?.id}>
-               {CharecterCard({
+              {CharecterCard({
                 name: val.name,
                 id: val.id,
               })}
@@ -133,7 +154,9 @@ const GenkaiSkeleton = ({
   view?: ViewEnum;
 }) => {
   return (
-    <div className={`${view == "flex" ? "lg:flex lg:flex-wrap  gap-4 " : ""} lg:px-18`}>
+    <div
+      className={`${view == "flex" ? "lg:flex lg:flex-wrap  gap-4 " : ""} lg:px-18`}
+    >
       {Array.from({ length: count }).map((_) => (
         <div
           key={"crskeleton" + Date.now() + Math.random()}

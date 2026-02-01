@@ -12,3 +12,4 @@ export { default as Clans } from './Clans';
 export { default as Documents } from './Documents';
 export { default as SocialMedia } from './SocialMedia';
 export { default as Kara } from './Kara';
+export { default as Support } from './Support';
