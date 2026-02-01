@@ -1,4 +1,4 @@
-import { FormLabel } from ".";
+import { FormError, FormLabel } from ".";
 
 
 interface Props {
@@ -17,6 +17,7 @@ interface Props {
   id?: string;
   classes?: string;
   maxLength?: number;
+  error?:string
 }
 
 const inputText = ({
@@ -33,6 +34,7 @@ const inputText = ({
   classes,
   onDispatch,
   maxLength,
+  error
 }: Props) => {
   const onInput: (val: React.ChangeEvent<HTMLTextAreaElement>) => void = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
@@ -58,7 +60,9 @@ const inputText = ({
           if (typeof onChange == "function") onChange(val);
         }}
       />
+      <FormError error={error}/>
     </div>
+    
   );
 };
 export default inputText;
