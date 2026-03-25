@@ -9,7 +9,6 @@ import {
   Kara,
   KekkeiGenkkai,
   Main,
-  Support,
   TailedBeast,
   Teams,
   Villages,
@@ -54,11 +53,7 @@ function App() {
             <Route path="/villages" Component={Villages}></Route>
             <Route path="/clans" Component={Clans}></Route>
             <Route path="/characters/:charId" Component={CharacterDetails} />
-
-            {/*
-            
-            <Route path="/support" Component={Support}></Route>
-            */}
+            {/*<Route path="/support" Component={Support}></Route>*/}
           </Routes>
         </div>
       </div>
