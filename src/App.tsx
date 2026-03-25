@@ -55,10 +55,7 @@ function App() {
             <Route path="/clans" Component={Clans}></Route>
             <Route path="/characters/:charId" Component={CharacterDetails} />
 
-            {/*
-            
-            <Route path="/support" Component={Support}></Route>
-            */}
+            {/*<Route path="/support" Component={Support}></Route>*/}
           </Routes>
         </div>
       </div>
