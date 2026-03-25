@@ -53,17 +53,13 @@ function App() {
             <Route path="/kara/:id" Component={CharacterDetails}></Route>
             <Route path="/villages" Component={Villages}></Route>
             <Route path="/clans" Component={Clans}></Route>
-            <Route path="/characters/:charId" Component={CharacterDetails} /> 
+            <Route path="/characters/:charId" Component={CharacterDetails} />
 
-            <Route path="/support" Component={Support}></Route>
-
+            {/*<Route path="/support" Component={Support}></Route>*/}
           </Routes>
         </div>
       </div>
-      {location.pathname !== "/support"&&
-    <FloatingButton />
-
-      }
+      {location.pathname !== "/support" && false && <FloatingButton />}
       <footer
         className="fixed bottom-2 left-1/2 z-50  -translate-x-1/2 w-[95%] sm:w-auto flex  sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm sm:text-base underline px-3 py-1
 "
