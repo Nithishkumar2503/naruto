@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+# NARUTO EXPLORER
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A premium anime website built with React 19, Tailwind CSS, and Framer Motion. Explore the hidden leaf universe with characters, clans, villages, tailed beasts, and legendary shinobi.
 
-Currently, two official plugins are available:
+## Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Live: [https://naruto-lovat-nine.vercel.app](https://naruto-lovat-nine.vercel.app)
 
-## React Compiler
+## Features
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- **Premium Dark UI** - Cinematic dark theme inspired by Naruto
+- **Glassmorphism Navbar** - Sticky navigation with animated active states
+- **Hero Section** - Full-screen landing with animated chakra particles
+- **Category Grid** - Premium cards with hover effects and gradient overlays
+- **Character Cards** - Netflix-style cards with 3D hover effects
+- **Character Details** - Animated sections with image gallery and jutsu list
+- **Shimmer Loading** - Skeleton loading instead of spinners
+- **Responsive** - Pixel-perfect on desktop, tablet, and mobile
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- React Router
+- Axios
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Design System
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**Colors:**
+- Background: `#080808`
+- Secondary: `#111111`
+- Card: `#151515`
+- Accent: `#FF2A2A`
+- Gold: `#FFD166`
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+**Typography:**
+- Headings: `font-black tracking-wider`
+- Body: `font-medium`
+- Buttons: `uppercase tracking-widest`
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── GlassNavbar.tsx      # Navigation with glassmorphism
+│   ├── HeroSection.tsx      # Landing page hero
+│   ├── CategoryCard.tsx     # Premium category cards
+│   ├── CharecterCard.tsx   # Character display cards
+│   ├── FloatingParticles.tsx # Animated chakra effects
+│   ├── LoadingSkeleton.tsx  # Shimmer loading states
+│   ├── AnimatedButton.tsx   # Motion button component
+│   └── NoDataNotFound.tsx   # Empty state component
+├── pages/
+│   ├── Main.tsx           # Landing page
+│   ├── Character.tsx      # Character listing
+│   ├── CharacterDetails.tsx # Character detail view
+│   ├── Clans.tsx          # Clan listing
+│   ├── Villages.tsx       # Village listing
+│   ├── Akatsuki.tsx       # Akatsuki members
+│   ├── Kara.tsx           # Kara organization
+│   ├── Teams.tsx          # Team listing
+│   └── Tailed-Beast.tsx   # Tailed beasts
+└── api/
+    └── server.ts         # API integration
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
+
+## Build
+
+```bash
+npm run build
+```
+
+## License
+
+MIT
