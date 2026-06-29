@@ -1,15 +1,13 @@
-
 function swipeImage(images: string[]){
+  const firstImage = images[0] || "/no-image.png";
   return (
-    <div className="flex overflow-x-clip bg-whiteo rounded-lg">
-      <img
-        key={images[0]}
-        src={images[0] || "/no-image.png"}
-        className="w-full h-44 object-cover rounded-t-lg"
-        alt=""
-      />
-    </div>
+    <img
+      loading="lazy"
+      src={firstImage}
+      alt="Character"
+      className="w-full h-44 object-cover rounded-t-lg"
+    />
   );
 };
 
-export default swipeImage
+export default swipeImage;

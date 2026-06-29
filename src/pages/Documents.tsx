@@ -1,9 +1,15 @@
-const documents = () => {
+import PageHeader from "../components/PageHeader";
+
+const Documents = () => {
   return (
-    <div className="content-center text-center">
-      <h1 className="p-2 text-white">Documents comming soon...</h1>
+    <div className="min-h-screen flex items-center justify-center">
+      <PageHeader
+        heading="Documents"
+        subHeading="API documentation coming soon..."
+      />
+     
     </div>
   );
 };
 
-export default documents;
+export default Documents;

@@ -3,8 +3,7 @@ import { GET } from "../api/server";
 import type { apiResult, CharactersItemProps, CharactersProps } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
-import { CharecterCard, NoDataFound, SearchBox } from "../components";
-
+import { CharecterCard, NoDataNotFound, SearchBox, CharacterSkeleton } from "../components";
 
 const TailBeasts = () => {
   const [page, setPage] = useState(1);
@@ -53,7 +52,7 @@ const TailBeasts = () => {
     div.addEventListener("scroll", onScroll);
     return () => div.removeEventListener("scroll", onScroll);
   }, [handleLoadMore]);
-  // Fetch data
+  
   useEffect(() => {
     getApiRes();
   }, [page, searchName]);
@@ -69,7 +68,7 @@ const TailBeasts = () => {
     }
   }
   return (
-    <div className=" h-screen ">
+    <div>
       <PageHeader
         heading="Tailed Beasts"
         subHeading="In the Naruto series, tail-beats articles"
@@ -79,15 +78,15 @@ const TailBeasts = () => {
           placeholder="tailed beasts..."
           onDispatch={handleSearchBox}
         />
-        <h1 className="text-end text-secondary mx-2">
+        <h1 className="text-end text-text-secondary mx-2">
           {store?.records?.length + "/" + store?.total}
         </h1>
       </div>
       <div
         ref={containerRef}
-        className="overflow-auto lg:h-[84vh]  h-[81vh] rounded-lg py-4"
+        className="overflow-auto lg:h-[80vh] h-[75vh] rounded-lg py-4"
       >
-        <div className="flex flex-wrap  gap-4 justify-center mb-4">
+        <div className="flex flex-wrap gap-4 justify-center mb-4">
           {store?.records?.map((val) => (
             <div key={val?.id}>
               {CharecterCard({
@@ -98,13 +97,13 @@ const TailBeasts = () => {
             </div>
           ))}
           {loading && (
-            <TailBeastsSkeleton
+            <CharacterSkeleton
               count={store?.records?.length == 0 ? 20 : 5}
               view={"flex"}
             />
           )}
           {!loading && store?.records?.length <= 0 && (
-            <NoDataFound
+            <NoDataNotFound
               onDispatch={() => {
                 setPage(1);
                 setSearchName("");
@@ -116,36 +115,6 @@ const TailBeasts = () => {
           )}
         </div>
       </div>
-    </div>
-  );
-};
-
-const viewEnum = {
-  flex: "flex",
-  grid: "grid",
-} as const;
-type ViewEnum = (typeof viewEnum)[keyof typeof viewEnum];
-
-const TailBeastsSkeleton = ({
-  count = 1,
-  view,
-}: {
-  count?: number;
-  view?: ViewEnum;
-}) => {
-  return (
-    <div className={`${view == "flex" ? "lg:flex lg:flex-wrap  gap-4 " : ""} lg:px-18`}>
-      {Array.from({ length: count }).map((_) => (
-        <div
-          key={"crskeleton" + Date.now() + Math.random()}
-          className="lg:w-56  w-[97vw] lg:px-0 px-6 bg-whiteo  h-56 mx-auto rounded-lg"
-        >
-          <div className="h-40 w-full animate-pulse bg-gray-200 rounded-lg"></div>
-          <div className="w-full flex justify-center mt-4  ">
-            <h1 className="py-3 w-40 animate-pulse bg-gray-200 bottom-0 rounded-lg"></h1>
-          </div>
-        </div>
-      ))}
     </div>
   );
 };

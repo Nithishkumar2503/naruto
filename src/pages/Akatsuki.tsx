@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { GET } from "../api/server";
-import type { apiResult, CharactersItemProps, CharactersProps,  } from "../type";
+import type { apiResult, CharactersItemProps, CharactersProps } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
-import { CharecterCard, NoDataFound, SearchBox } from "../components";
+import { CharecterCard, NoDataNotFound, SearchBox, CharacterSkeleton } from "../components";
 
-const Akatsukis = () => {
+const Akatsuki = () => {
   const [page, setPage] = useState(1);
   const [searchName, setSearchName] = useState("");
   const loadMore = searchName
@@ -22,7 +22,6 @@ const Akatsukis = () => {
       const response: apiResult<CharactersProps> = await GET({
         relativeUrl: `/akatsuki${loadMore}`,
       });
-
       setStore(
         response.result.akatsuki,
         response.result.pageSize,
@@ -41,7 +40,6 @@ const Akatsukis = () => {
   };
 
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const subCointainerRef=useRef<HTMLDivElement|null>(null)
   useEffect(() => {
     if (store.total == store.records.length) return;
     const div = containerRef.current;
@@ -51,12 +49,10 @@ const Akatsukis = () => {
       if (div.scrollTop + div.clientHeight >= div.scrollHeight - 10 && !loading)
         handleLoadMore();
     };
-   
     div.addEventListener("scroll", onScroll);
-    
     return () => div.removeEventListener("scroll", onScroll);
   }, [handleLoadMore]);
-  // Fetch data
+  
   useEffect(() => {
     getApiRes();
   }, [page, searchName]);
@@ -72,27 +68,27 @@ const Akatsukis = () => {
     }
   }
   return (
-    <div className=" h-screen ">
+    <div>
       <PageHeader
-        heading="Akatsukis Members"
-        subHeading="In the Naruto series, Akatsukis articles"
+        heading="Akatsuki Members"
+        subHeading="In the Naruto series, Akatsuki organization members"
       />
       <div className="flex ml-auto w-fit items-center content-center">
         <SearchBox
-          placeholder="search Akatsukis..."
+          placeholder="search Akatsuki..."
           onDispatch={handleSearchBox}
         />
-        <h1 className="text-end text-secondary mx-2">
+        <h1 className="text-end text-text-secondary mx-2">
           {store?.records?.length + "/" + store?.total}
         </h1>
       </div>
       <div
         ref={containerRef}
-        className="overflow-auto lg:h-[84vh]  h-[81vh] rounded-lg py-4"
+        className="overflow-auto lg:h-[80vh] h-[75vh] rounded-lg py-4"
       >
-        <div ref={subCointainerRef} className="flex flex-wrap  gap-4 justify-center mb-4">
+        <div className="flex flex-wrap gap-4 justify-center mb-4">
           {store?.records?.map((val:CharactersItemProps) => (
-            <div  key={'akastuki'+val.id}>
+            <div key={'akatsuki-'+val.id}>
               {CharecterCard({
                 name: val.name,
                 id: val.id,
@@ -101,20 +97,20 @@ const Akatsukis = () => {
             </div>
           ))}
           {loading && (
-            <VillagesSkeleton
+            <CharacterSkeleton
               count={store?.records?.length == 0 ? 20 : 5}
               view={"flex"}
             />
           )}
           {!loading && store?.records?.length <= 0 && (
-            <NoDataFound
+            <NoDataNotFound
               onDispatch={() => {
                 setPage(1);
                 setSearchName("");
               }}
-              actionButton="All Villages"
+              actionButton="All Akatsuki"
               imagePath="/naruto-eat.png"
-              title="No Villages found!."
+              title="No Akatsuki members found!."
             />
           )}
         </div>
@@ -123,34 +119,4 @@ const Akatsukis = () => {
   );
 };
 
-const viewEnum = {
-  flex: "flex",
-  grid: "grid",
-} as const;
-type ViewEnum = (typeof viewEnum)[keyof typeof viewEnum];
-
-const VillagesSkeleton = ({
-  count = 1,
-  view,
-}: {
-  count?: number;
-  view?: ViewEnum;
-}) => {
-  return (
-    <div className={`${view == "flex" ? "lg:flex lg:flex-wrap  gap-4 " : ""} lg:px-18`}>
-      {Array.from({ length: count }).map((_) => (
-        <div
-          key={"crskeleton" + Date.now() + Math.random()}
-          className="lg:w-56  w-[97vw] lg:px-0 px-6 bg-whiteo  h-56 mx-auto rounded-lg"
-        >
-          <div className="h-40 w-full animate-pulse bg-gray-200 rounded-lg"></div>
-          <div className="w-full flex justify-center mt-4  ">
-            <h1 className="py-3 w-40 animate-pulse bg-gray-200 bottom-0 rounded-lg"></h1>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export default Akatsukis;
+export default Akatsuki;

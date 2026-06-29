@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { GET } from "../api/server";
 import type {
   CharactersDebutProps,
@@ -10,12 +11,7 @@ import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
 import { FormLabel, SEO } from "../components";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-
-interface PersonalProps {
-  name?: string;
-  images?: string[];
-  personal?: CharactersPersonalProps;
-}
+import { motion, AnimatePresence } from "framer-motion";
 
 function SectionCard({
   title,
@@ -25,12 +21,17 @@ function SectionCard({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-2xl border border-white/10 bg-zinc-900/70 backdrop-blur-sm shadow-lg">
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="rounded-2xl border border-white/10 bg-zinc-900/70 backdrop-blur-sm shadow-lg"
+    >
       <div className="border-b border-white/10 px-5 py-4">
         <FormLabel label={title} uppercase />
       </div>
       <div className="p-5">{children}</div>
-    </section>
+    </motion.section>
   );
 }
 
@@ -49,7 +50,7 @@ function InfoRow({
         bordered ? "border-b border-white/10" : ""
       }`}
     >
-      <div className="text-sm font-semibold capitalize tracking-wide text-orange-400">
+      <div className="text-sm font-semibold capitalize tracking-wide text-accent-secondary">
         {label}
       </div>
       <div className="text-sm leading-7 text-zinc-300 break-words">{value}</div>
@@ -65,13 +66,19 @@ function ChipList({ items }: { items?: string[] }) {
       {items.map((item, index) => (
         <span
           key={index}
-          className="rounded-full border border-orange-400/20 bg-orange-500/10 px-4 py-2 text-sm text-orange-200"
+          className="rounded-full border border-accent-secondary/30 bg-accent-secondary/10 px-4 py-2 text-sm text-accent-secondary"
         >
           {item}
         </span>
       ))}
     </div>
   );
+}
+
+interface PersonalProps {
+  name?: string;
+  images?: string[];
+  personal?: CharactersPersonalProps;
 }
 
 function PersonalCharacter({
@@ -81,11 +88,7 @@ function PersonalCharacter({
   debut,
   family,
   tools,
-}: PersonalProps & {
-  debut: CharactersDebutProps;
-  family: CharactersFamilyProps;
-  tools: string[];
-}) {
+}: PersonalProps & { debut: CharactersDebutProps; family: CharactersFamilyProps; tools: string[] }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const activeImage = useMemo(() => {
@@ -108,31 +111,39 @@ function PersonalCharacter({
   return (
     <div className="mx-auto grid min-h-[60vh] w-full gap-6 lg:grid-cols-[420px_1fr] lg:px-10">
       <div className="space-y-6">
-        <div className="overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-2xl lg:sticky lg:top-4">
+        <div className="overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-2xl lg:sticky lg:top-24">
           <div className="relative">
-            {activeImage ? (
-              <img
-                src={activeImage}
-                alt={name || "Character image"}
-                className="h-[420px] w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-[420px] items-center justify-center bg-zinc-800 text-zinc-500">
-                No image available
-              </div>
-            )}
+            <AnimatePresence mode="wait">
+              {activeImage ? (
+                <motion.img
+                  key={activeImage}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  src={activeImage}
+                  alt={name || "Character image"}
+                  loading="lazy"
+                  className="h-[420px] w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-[420px] items-center justify-center bg-zinc-800 text-zinc-500">
+                  No image available
+                </div>
+              )}
+            </AnimatePresence>
 
             {images.length > 1 && (
               <>
                 <button
                   onClick={prevImage}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur transition hover:bg-black/70"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur transition-all hover:bg-accent hover:scale-110"
                 >
                   <MdKeyboardArrowLeft className="text-2xl" />
                 </button>
                 <button
                   onClick={nextImage}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur transition hover:bg-black/70"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur transition-all hover:bg-accent hover:scale-110"
                 >
                   <MdKeyboardArrowRight className="text-2xl" />
                 </button>
@@ -156,11 +167,12 @@ function PersonalCharacter({
                     onClick={() => setActiveImageIndex(index)}
                     className={`shrink-0 overflow-hidden rounded-xl border transition ${
                       activeImageIndex === index
-                        ? "border-orange-400"
-                        : "border-white/10"
+                        ? "border-accent"
+                        : "border-white/10 hover:border-accent/50"
                     }`}
                   >
                     <img
+                      loading="lazy"
                       src={img}
                       alt={`${name} ${index + 1}`}
                       className="h-16 w-16 object-cover"
@@ -180,7 +192,7 @@ function PersonalCharacter({
                   key={key}
                   className="flex items-start justify-between gap-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3"
                 >
-                  <span className="capitalize text-orange-300">{key}</span>
+                  <span className="capitalize text-accent-secondary">{key}</span>
                   <span className="text-right text-zinc-300">{value}</span>
                 </div>
               ))}
@@ -196,9 +208,9 @@ function PersonalCharacter({
               {Object.entries(family).map(([key, value]) => (
                 <div
                   key={key}
-                  className="rounded-2xl border border-orange-400/15 bg-gradient-to-br from-orange-500/10 to-transparent p-4"
+                  className="rounded-2xl border border-accent-secondary/15 bg-gradient-to-br from-accent-secondary/10 to-transparent p-4"
                 >
-                  <p className="text-xs uppercase tracking-widest text-orange-300">
+                  <p className="text-xs uppercase tracking-widest text-accent-secondary">
                     {key}
                   </p>
                   <p className="mt-2 text-sm font-medium text-white">{value}</p>
@@ -248,7 +260,7 @@ function PersonalCharacter({
                             key={nestedKey}
                             className="grid gap-2 rounded-xl bg-white/5 px-4 py-3 lg:grid-cols-[140px_1fr]"
                           >
-                            <span className="text-sm font-medium text-orange-200">
+                            <span className="text-sm font-medium text-accent-secondary">
                               {nestedKey}
                             </span>
                             <span className="text-sm text-zinc-300 break-words">
@@ -305,7 +317,7 @@ function VoiceActorChar({
             key={key}
             className="rounded-2xl border border-white/10 bg-white/5 p-4"
           >
-            <h3 className="mb-3 capitalize text-lg font-semibold text-orange-300">
+            <h3 className="mb-3 capitalize text-lg font-semibold text-accent-secondary">
               {key}
             </h3>
             <div className="space-y-2">
@@ -330,12 +342,15 @@ function JutsusChar({ jutsus }: { jutsus: string[] }) {
     <SectionCard title="Jutsus">
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {jutsus.map((jutsu, index) => (
-          <div
+          <motion.div
             key={index}
-            className="rounded-2xl border border-white/10 bg-gradient-to-br from-zinc-800 to-zinc-900 px-4 py-4 text-sm text-zinc-200 transition hover:-translate-y-1 hover:border-orange-400/40 hover:shadow-lg"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: index * 0.05 }}
+            className="rounded-2xl border border-white/10 bg-gradient-to-br from-zinc-800 to-zinc-900 px-4 py-4 text-sm text-zinc-200 transition-all duration-300 hover:-translate-y-1 hover:border-accent-secondary/40 hover:shadow-lg"
           >
             {jutsu}
-          </div>
+          </motion.div>
         ))}
       </div>
     </SectionCard>
@@ -344,6 +359,7 @@ function JutsusChar({ jutsus }: { jutsus: string[] }) {
 
 const CharacterDetails = () => {
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
   const characterName = location?.pathname?.split("/")?.[2];
   const { getOne, setStoreOne } = createDataStore<CharactersItemProps>();
 
@@ -363,6 +379,20 @@ const CharacterDetails = () => {
     getApiRes();
   }, []);
 
+  if (loading) {
+    return (
+      <div>
+        <PageHeader heading="Character Details" subHeading="Loading..." />
+        <div className="rounded-2xl bg-zinc-950 px-4 py-6 lg:px-6">
+          <div className="grid gap-6 lg:grid-cols-[420px_1fr] animate-pulse">
+            <div className="rounded-3xl bg-zinc-900 h-[520px]" />
+            <div className="rounded-3xl bg-zinc-900 h-[520px]" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <PageHeader
@@ -372,7 +402,12 @@ const CharacterDetails = () => {
 
       <div className="rounded-2xl bg-zinc-950 px-4 py-6 lg:px-6">
         {getOne && (
-          <div className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="space-y-6"
+          >
             <SEO
               title={`${getOne.name}`}
               description={`Learn about ${getOne.name}, including background, abilities, clan, nature type, and role in the Naruto universe.`}
@@ -421,14 +456,7 @@ const CharacterDetails = () => {
             <JutsusChar jutsus={getOne?.jutsu} />
             <NatureTypeChar natureType={getOne?.natureType} />
             <VoiceActorChar voiceActor={getOne?.voiceActors} />
-          </div>
-        )}
-
-        {loading && (
-          <div className="grid gap-6 lg:grid-cols-[420px_1fr] animate-pulse">
-            <div className="rounded-3xl bg-zinc-900 h-[520px]" />
-            <div className="rounded-3xl bg-zinc-900 h-[520px]" />
-          </div>
+          </motion.div>
         )}
       </div>
     </div>
