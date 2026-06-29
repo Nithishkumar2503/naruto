@@ -16,6 +16,8 @@ const noDataFound = ({
     <div className="h-[75vh]  content-center items-center ">
       <div className="w-[40vw] h-[40vh]  my-auto  p-2 items-center content-center ">
         <img
+        loading="lazy"
+
           className="w-ful object-coverl h-80 mx-auto py-2"
           src={imagePath}
           alt="No image"

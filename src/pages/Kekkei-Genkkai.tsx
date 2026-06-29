@@ -3,9 +3,9 @@ import { GET } from "../api/server";
 import type { apiResult, TeamsItemProps, TeamsProps } from "../type";
 import PageHeader from "../components/PageHeader";
 import { createDataStore } from "../shared/datastore";
-import { CharecterCard, NoDataFound, SearchBox, SEO } from "../components";
+import { CharecterCard, NoDataNotFound, SearchBox, SEO, CharacterSkeleton } from "../components";
 
-const genkai = () => {
+const KekkeiGenkkai = () => {
   const [page, setPage] = useState(1);
   const [searchName, setSearchName] = useState("");
   const loadMore = searchName
@@ -52,7 +52,7 @@ const genkai = () => {
     div.addEventListener("scroll", onScroll);
     return () => div.removeEventListener("scroll", onScroll);
   }, [handleLoadMore]);
-  // Fetch data
+  
   useEffect(() => {
     getApiRes();
   }, [page, searchName]);
@@ -68,7 +68,7 @@ const genkai = () => {
     }
   }
   return (
-    <div className=" h-screen ">
+    <div>
       <SEO
         title="Kekkei Genkai"
         description="Explore Kekkei Genkai in Naruto, including rare bloodline abilities, their users, and their impact in battle."
@@ -92,23 +92,23 @@ const genkai = () => {
         }}
       />
       <PageHeader
-        heading="Kekkei genkai's"
-        subHeading="In the Naruto series, kekkai-genkai's articles"
+        heading="Kekkei Genkai"
+        subHeading="In the Naruto series, kekkei-genkai articles"
       />
       <div className="flex ml-auto w-fit items-center content-center">
         <SearchBox
-          placeholder="search kekkei-genkai's..."
+          placeholder="search kekkei-genkai..."
           onDispatch={handleSearchBox}
         />
-        <h1 className="text-end text-secondary mx-2">
+        <h1 className="text-end text-text-secondary mx-2">
           {store?.records?.length + "/" + store?.total}
         </h1>
       </div>
       <div
         ref={containerRef}
-        className="overflow-auto lg:h-[84vh]  h-[81vh] rounded-lg py-4"
+        className="overflow-auto lg:h-[80vh] h-[75vh] rounded-lg py-4"
       >
-        <div className="flex flex-wrap  gap-4 justify-center mb-4">
+        <div className="flex flex-wrap gap-4 justify-center mb-4">
           {store?.records?.map((val) => (
             <div key={val?.id}>
               {CharecterCard({
@@ -118,20 +118,20 @@ const genkai = () => {
             </div>
           ))}
           {loading && (
-            <GenkaiSkeleton
+            <CharacterSkeleton
               count={store?.records?.length == 0 ? 20 : 5}
               view={"flex"}
             />
           )}
           {!loading && store?.records?.length <= 0 && (
-            <NoDataFound
+            <NoDataNotFound
               onDispatch={() => {
                 setPage(1);
                 setSearchName("");
               }}
-              actionButton="All Villages"
+              actionButton="All Kekkei Genkai"
               imagePath="/naruto-eat.png"
-              title="No Villages found!."
+              title="No Kekkei Genkai found!."
             />
           )}
         </div>
@@ -140,36 +140,4 @@ const genkai = () => {
   );
 };
 
-const viewEnum = {
-  flex: "flex",
-  grid: "grid",
-} as const;
-type ViewEnum = (typeof viewEnum)[keyof typeof viewEnum];
-
-const GenkaiSkeleton = ({
-  count = 1,
-  view,
-}: {
-  count?: number;
-  view?: ViewEnum;
-}) => {
-  return (
-    <div
-      className={`${view == "flex" ? "lg:flex lg:flex-wrap  gap-4 " : ""} lg:px-18`}
-    >
-      {Array.from({ length: count }).map((_) => (
-        <div
-          key={"crskeleton" + Date.now() + Math.random()}
-          className="lg:w-56  w-[97vw] lg:px-0 px-6 bg-whiteo  h-56 mx-auto rounded-lg"
-        >
-          <div className="h-40 w-full animate-pulse bg-gray-200 rounded-lg"></div>
-          <div className="w-full flex justify-center mt-4  ">
-            <h1 className="py-3 w-40 animate-pulse bg-gray-200 bottom-0 rounded-lg"></h1>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export default genkai;
+export default KekkeiGenkkai;

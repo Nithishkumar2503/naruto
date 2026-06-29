@@ -119,152 +119,154 @@ const Contact = () => {
   };
 
   return (
-    <section className="w-full px-4 py-10 md:px-6 lg:px-8">
-      {loading && <Loading />}
+    <div>
+      <section className="w-full px-4 pt-20 pb-10 md:px-6 lg:px-8">
+        {loading && <Loading />}
 
-      <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-white/10 bg-zinc-950 shadow-2xl">
-        <div className="grid lg:grid-cols-2">
-          {/* Left Content */}
-          <div className="flex flex-col justify-center border-b border-white/10 bg-gradient-to-br from-orange-500/10 via-transparent to-transparent p-8 lg:border-b-0 lg:border-r">
-            <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-orange-400">
-              Contact
-            </p>
-            <h1 className="text-3xl font-bold text-white md:text-4xl">
-              Let’s connect with the shinobi world
-            </h1>
-            <p className="mt-4 max-w-md text-zinc-400 leading-7">
-              Have feedback, suggestions, or want to share your favorite Naruto
-              character? Send a message and get in touch through this form.
-            </p>
+        <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-white/10 bg-zinc-950 shadow-2xl">
+          <div className="grid lg:grid-cols-2">
+            {/* Left Content */}
+            <div className="flex flex-col justify-center border-b border-white/10 bg-gradient-to-br from-accent-secondary/10 via-transparent to-transparent p-8 lg:border-b-0 lg:border-r">
+              <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-accent-secondary">
+                Contact
+              </p>
+              <h1 className="text-3xl font-bold text-white md:text-4xl">
+                Let's connect with the shinobi world
+              </h1>
+              <p className="mt-4 max-w-md text-zinc-400 leading-7">
+                Have feedback, suggestions, or want to share your favorite Naruto
+                character? Send a message and get in touch through this form.
+              </p>
 
-            <div className="mt-8 space-y-4">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <h2 className="text-sm font-semibold text-orange-300">
-                  Quick response
-                </h2>
-                <p className="mt-1 text-sm text-zinc-400">
-                  Usually best for feedback, ideas, and anime-related queries.
-                </p>
-              </div>
+              <div className="mt-8 space-y-4">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <h2 className="text-sm font-semibold text-accent-secondary">
+                    Quick response
+                  </h2>
+                  <p className="mt-1 text-sm text-zinc-400">
+                    Usually best for feedback, ideas, and anime-related queries.
+                  </p>
+                </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <h2 className="text-sm font-semibold text-orange-300">
-                  Fan-made platform
-                </h2>
-                <p className="mt-1 text-sm text-zinc-400">
-                  Built for Naruto fans to explore characters, villages, clans,
-                  and more.
-                </p>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <h2 className="text-sm font-semibold text-accent-secondary">
+                    Fan-made platform
+                  </h2>
+                  <p className="mt-1 text-sm text-zinc-400">
+                    Built for Naruto fans to explore characters, villages, clans,
+                    and more.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Right Form */}
-          <div className="p-6 md:p-8">
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <h2 className="text-2xl font-semibold text-white">
-                  Send a message
-                </h2>
-                <p className="mt-2 text-sm text-zinc-400">
-                  Fill in your details and share your message below.
-                </p>
-              </div>
-
-              {apiMessage && (
-                <div
-                  className={`rounded-2xl border px-4 py-3 text-sm ${
-                    isSuccess
-                      ? "border-green-500/30 bg-green-500/10 text-green-300"
-                      : "border-red-500/30 bg-red-500/10 text-red-300"
-                  }`}
-                >
-                  {apiMessage}
+            {/* Right Form */}
+            <div className="p-6 md:p-8">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <h2 className="text-2xl font-semibold text-white">
+                    Send a message
+                  </h2>
+                  <p className="mt-2 text-sm text-zinc-400">
+                    Fill in your details and share your message below.
+                  </p>
                 </div>
-              )}
 
-              <div className="grid gap-5 md:grid-cols-2">
+                {apiMessage && (
+                  <div
+                    className={`rounded-2xl border px-4 py-3 text-sm ${
+                      isSuccess
+                        ? "border-green-500/30 bg-green-500/10 text-green-300"
+                        : "border-red-500/30 bg-red-500/10 text-red-300"
+                    }`}
+                  >
+                    {apiMessage}
+                  </div>
+                )}
+
+                <div className="grid gap-5 md:grid-cols-2">
+                  <FormWrapper
+                    child={
+                      <InputText
+                        error={errors?.name}
+                        placeholder="Nithish Kumar"
+                        onDispatch={(val) => {
+                          setFormData((prev) => ({ ...prev, name: val }));
+                        }}
+                        value={formData?.name}
+                        label="Name"
+                        name="name"
+                      />
+                    }
+                  />
+
+                  <FormWrapper
+                    child={
+                      <InputText
+                        error={errors?.phone}
+                        placeholder="9876543210"
+                        onDispatch={(val) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            phone: val,
+                          }));
+                        }}
+                        value={formData?.phone}
+                        label="Phone"
+                        name="phone"
+                        textType="number"
+                      />
+                    }
+                  />
+                </div>
+
                 <FormWrapper
                   child={
                     <InputText
-                      error={errors?.name}
-                      placeholder="Nithish Kumar"
-                      onDispatch={(val) => {
-                        setFormData((prev) => ({ ...prev, name: val }));
-                      }}
-                      value={formData?.name}
-                      label="Name"
-                      name="name"
-                    />
-                  }
-                />
-
-                <FormWrapper
-                  child={
-                    <InputText
-                      error={errors?.phone}
-                      placeholder="9876543210"
+                      error={errors?.email}
+                      placeholder="you@example.com"
                       onDispatch={(val) => {
                         setFormData((prev) => ({
                           ...prev,
-                          phone: val,
+                          email: val,
                         }));
                       }}
-                      value={formData?.phone}
-                      label="Phone"
-                      name="phone"
-                      textType="number"
+                      name="email"
+                      value={formData?.email}
+                      label="Email"
                     />
                   }
                 />
-              </div>
 
-              <FormWrapper
-                child={
-                  <InputText
-                    error={errors?.email}
-                    placeholder="you@example.com"
-                    onDispatch={(val) => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        email: val,
-                      }));
-                    }}
-                    name="email"
-                    value={formData?.email}
-                    label="Email"
-                  />
-                }
-              />
-
-              <FormWrapper
-                child={
-                  <MultiLineInput
-                    placeholder="Hi, I’d like to share feedback about the Naruto website..."
-                    onDispatch={(val) => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        message: val,
-                      }));
-                    }}
-                    value={formData?.message}
-                    label="Message"
-                    error={errors?.message}
-                  />
-                }
-              />
-
-              <div className="flex justify-end pt-2">
-                <SubmitButton
-                  classes="w-full md:w-44 rounded-xl"
-                  name={loading ? "Sending..." : "Send Message"}
+                <FormWrapper
+                  child={
+                    <MultiLineInput
+                      placeholder="Hi, I'd like to share feedback about the Naruto website..."
+                      onDispatch={(val) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          message: val,
+                        }));
+                      }}
+                      value={formData?.message}
+                      label="Message"
+                      error={errors?.message}
+                    />
+                  }
                 />
-              </div>
-            </form>
+
+                <div className="flex justify-end pt-2">
+                  <SubmitButton
+                    classes="w-full md:w-44 rounded-xl"
+                    name={loading ? "Sending..." : "Send Message"}
+                  />
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 
