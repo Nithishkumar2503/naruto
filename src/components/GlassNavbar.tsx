@@ -72,7 +72,7 @@ function GlassNavbar() {
             <div className="flex items-center gap-4 shrink-0">
               <div className="hidden md:flex items-center gap-3">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/Nithishkumar2503"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-text-secondary hover:text-accent transition-colors"

@@ -78,7 +78,7 @@ function AppContent() {
 
             <div className="flex items-center gap-4">
               <a
-                href="https://github.com"
+                href="https://github.com/Nithishkumar2503"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-text-secondary hover:text-white transition-colors"
@@ -90,7 +90,7 @@ function AppContent() {
               </a>
 
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/nithishkumar-shanmugam/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-text-secondary hover:text-white transition-colors"
